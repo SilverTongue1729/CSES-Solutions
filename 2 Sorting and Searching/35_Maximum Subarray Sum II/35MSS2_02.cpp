@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+#define ordered_set tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
+#define ordered_multiset tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>
+// *( .find_by_order(i)) returns iterator to ith element, so use *
+// .order_of_key(k) returns number of items strictly < k
+// .find(val) doesn't work, so use .find_by_order(mset.order_of_key(val))
+
+#define for_(i,s,e) for ( i=s; ((i<e)&&(s<e))||((i>e)&&(s>=e)); (s<e)?i++:i--)
+#define all(x) x.begin(),x.end()
+#define endl '\n'
+#define PB push_back
+#define MP make_pair
+#define ff first
+#define ss second
+#define sz(a) (int)(a.size())
+#define LIM1 300005
+// #define DEBUG
+typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+typedef array<int, 2> ii;
+
+int i,j,t,n;
+
+int main(){
+  ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+  #ifdef LOCAL
+    freopen("/home/sriteja/Programming/Random/input_01.txt","r",stdin);
+  #endif
+
+  int a,b;
+  cin>>n>>a>>b;
+  vector<ll> v(n),pf(n);
+  cin>>v[0];
+  pf[0]=v[0];
+  for_(i,1,n){
+    cin>>v[i];
+    pf[i]=v[i]+pf[i-1];
+  }
+
+  multiset<ll> ms;
+  for_(i,a-1,b){
+    if (i>=n) break;
+    ms.insert(pf[i]);
+  }
+  ll ans = *ms.rbegin();
+
+  for_(i,0,n-a){
+    ms.erase(ms.find(pf[i+a-1]));
+    if (i+b<n) ms.insert(pf[i+b]);
+    ans = max(ans,*ms.rbegin()-pf[i]);
+  }
+  cout<<ans;
+
+  return 0;
+}
