@@ -71,6 +71,7 @@ void merge_sort(int s, int e, int arr[][2]){
 }
 
 int index(int ind){
+  cout<<"ind="<<ind<<endl;
   if (ind==h[ind][1])
     return ind;
   else
@@ -78,7 +79,12 @@ int index(int ind){
 }
 
 int main(){
-  ios_base::sync_with_stdio(false); cin.tie(0);
+#ifdef LOCAL
+  freopen("/home/sriteja/Competitive Programming/Random/input_01.txt","r",stdin);
+  freopen("/home/sriteja/Competitive Programming/Random/output_02.txt","w",stdout);
+#endif
+
+  // ios_base::sync_with_stdio(false); cin.tie(0);
 
   fastscan(n); fastscan(m);
   for_(i,0,n){
@@ -86,6 +92,10 @@ int main(){
     h[i][1] = i;
   }
   merge_sort(0,n,h);
+  for_(i,0,n) cout<<h[i][0]<<" ";
+  cout<<endl;
+  for_(i,0,n) cout<<h[i][1]<<" ";
+  cout<<endl;
   countval = n-1;
   for_(i,m,0){
     fastscan(ti);
